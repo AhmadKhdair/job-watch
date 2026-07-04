@@ -1,84 +1,60 @@
 # job-watch
 
-أتمتة مجانية بالكامل بتفحص لك فرص عمل/تدريب جديدة وترسلك إيميل. بتشتغل على
-GitHub Actions (مجاني)، وما بتستهلك أي توكينز من Claude بعد ما تركّبها هلق.
+A completely free automation that scans for new job and internship opportunities and emails me when it finds something. It runs on GitHub Actions (free tier), so it doesn't cost anything to keep running once it's set up.
 
-## شو بتعمل بالضبط
+## What it does
 
-- بتفتح كل رابط بـ`companies.json` بمتصفح مخفي (Playwright)، حتى المواقع
-  يلي محتوى وظائفها يتحمّل بالجافاسكربت.
-- لصفحات البحث بمواقع الوظائف (`job_boards`): بتطلع كل إعلان وظيفة لحاله
-  وتقارنه بالمرة السابقة — إذا في إعلان جديد، بيتحط بالتقرير.
-- لصفحات الشركات (`diff_watch`): بتاخذ "بصمة" (hash) لمحتوى الصفحة، وإذا
-  تغيّرت المحتوى عن آخر مرة، بترجعلك تنبيه "روح شيك هاي الصفحة يدوياً"
-  (هاي الطريقة بتشتغل مع أي موقع بدون ما نحتاج نعرف تفاصيل تصميمه الداخلي).
-- إذا في أي جديد، بيرسللك إيميل واحد فيه كل التفاصيل والروابط.
-- بيحفظ آخر حالة بملف `data/state.json` (الأتمتة نفسها بتحدّثه أوتوماتيكياً
-  بكل تشغيلة، ما تحتاج تلمسه).
+- Opens every link in `companies.json` with a headless browser (Playwright), so even job pages that load their content with JavaScript work fine.
+- For job board search pages (`job_boards`): pulls out every individual posting and compares it against what it saw last run. Anything new goes into the report.
+- For company career pages (`diff_watch`): takes a hash of the page's visible content, and if it changed since last time, flags it as "worth checking manually" — this works on any site since it doesn't need to know the page's internal layout.
+- If anything new turns up, it sends me a single summary email with the details and links.
+- It saves the last-seen state in `data/state.json`, which the workflow updates automatically on every run — I never touch this file by hand.
 
-## ⚠️ ملاحظة صادقة قبل ما تبلش
+## Before the first real run
 
-بنيت هاد الكود بأنماط معروفة وموثوقة (Playwright + BeautifulSoup)، بس
-البيئة يلي أنا شغال فيها ما بتسمحلي أختبره فعلياً ضد المواقع الحقيقية
-(الشبكة عندي مقيّدة). يعني في احتمال بسيط إنه أول تشغيلة فعلية على
-GitHub تحتاج تعديل بسيط (مثلاً لو موقع غيّر تصميمه). إذا صار هيك، خذلي
-سكرين شوت أو انسخلي نص الخطأ من "Actions" بجيت هب وأنا بصلحه معك بدقيقتين.
+I built this with well-established patterns (Playwright + BeautifulSoup), but I haven't run it against every one of these sites under real conditions. So there's a small chance the first live run needs a minor fix if one of these sites has changed its layout. If a source errors out, the email report (or the Actions log) will say exactly which one and why.
 
-## خطوات التركيب (مرة وحدة بس)
+## One-time setup
 
-### 1. ارفع الملفات لحساب GitHub تبعك
+### 1. Repo and files
 
-اعمل repo جديد (Private أفضل) بحسابك `AhmadKhdair`، وارفعله كل الملفات
-يلي بهاد المجلد (بما فيها مجلد `.github` و `data`).
+Done — files are uploaded to this repo, including `.github/workflows` and `data`.
 
-### 2. جهّز App Password من جيميل (مرة وحدة)
+### 2. Gmail App Password
 
-1. لازم يكون عندك "التحقق بخطوتين" (2-Step Verification) مفعّل على حساب
-   Google تبعك: myaccount.google.com/security
-2. بعدها روح على: myaccount.google.com/apppasswords
-3. اعمل App Password جديد (اسمه مثلاً "job-watch")، وانسخ الكود يلي بيطلعلك
-   (١٦ حرف). هاد مش باسوردك العادي، وهو خاص فيك بس — أنا ما بشوفه أبداً.
+1. Turn on 2-Step Verification on my Google account: myaccount.google.com/security
+2. Go to: myaccount.google.com/apppasswords
+3. Create a new App Password (name it "job-watch"), and copy the 16-character code it generates. This is separate from my regular Google password.
 
-### 3. ضيف الأسرار (Secrets) بالـ repo
+### 3. Repository secrets
 
-بصفحة الـ repo على GitHub: Settings → Secrets and variables → Actions →
-New repository secret. ضيف ثلاثة:
+On this repo's page: Settings → Secrets and variables → Actions → New repository secret. Add three:
 
-| الاسم | القيمة |
+| Name | Value |
 |---|---|
-| `EMAIL_ADDRESS` | إيميلك (مثلاً ahmad.khdair05@gmail.com) |
-| `EMAIL_APP_PASSWORD` | الكود يلي طلع من خطوة ٢ |
-| `TO_EMAIL` | وين بدك التنبيهات توصل (ممكن نفس الإيميل) |
+| `EMAIL_ADDRESS` | my Gmail address |
+| `EMAIL_APP_PASSWORD` | the 16-character code from step 2 |
+| `TO_EMAIL` | where alerts should land (can be the same address) |
 
-### 4. جرّبها يدوياً
+### 4. Test run
 
-روح لتبويب "Actions" بالـ repo → اختار "job-watch" من القائمة الجانبية →
-اضغط "Run workflow" لتشغيلها فوراً بدل ما تستنى الموعد المجدول. أول
-تشغيلة رح تبني "الأساس" (baseline) بس — يعني ما رح ترسل إيميل عن كل
-الوظائف الموجودة حالياً (عشان ما تغرق بإيميلات)، رح ترسل بس من الوظائف
-الجديدة يلي تظهر بعدها.
+Actions tab → "job-watch" in the sidebar → "Run workflow" to trigger it immediately instead of waiting for the schedule. The first run only builds a baseline, so it won't email about every job that currently exists — only new ones that show up after that.
 
-## كيف تضيف/تشيل شركات أو كلمات بحث
+## Adding or removing sources
 
-افتح `companies.json` وعدّل بحرية — ما بتحتاج ترجعلي:
+Edit `companies.json` directly, no code changes needed:
 
-- `diff_watch`: ضيف رابط صفحة وظائف أي شركة (حتى لو ما عندها صفحة بحث
-  منظمة)، وأي تغيير فيها رح ينبهك.
-- `job_boards`: ضيف رابط بحث بكلمة مفتاحية من jobs.ps أو Bayt.com أو أي
-  موقع وظائف تاني — كل ما تلاقي رابط بحث بمتصفحك، انسخه حطه هون.
+- `diff_watch`: add a link to any company's careers page, even without a structured search — any change gets flagged.
+- `job_boards`: add a search URL from any job board (jobs.ps, Bayt.com, RemoteOK, We Work Remotely, etc.) — whatever search link shows up in the browser can be pasted straight in here.
 
-## تغيير الجدول الزمني
+## Changing the schedule
 
-بملف `.github/workflows/watch.yml`، السطر:
+In `.github/workflows/watch.yml`:
 ```
 - cron: "0 6,18 * * *"
 ```
-هاد معناه الساعة ٦ و ٦ مساءً UTC (يعني ٨-٩ صباحاً و٨-٩ مساءً بتوقيت
-فلسطين تقريباً). غيّره لأي جدول تحبه — موقع crontab.guru بيساعدك تفهم
-الصيغة.
+This runs at 6am and 6pm UTC (roughly 8-9am / 8-9pm Palestine time). Change it to whatever schedule fits — crontab.guru is useful for figuring out the syntax.
 
-## التكلفة
+## Cost
 
-صفر. GitHub Actions مجاني لهاد الحجم من الاستخدام (تشغيلتين باليوم ~دقيقة
-لكل وحدة = أقل بكتير من الحد المجاني الشهري)، وGmail SMTP مجاني، وما في
-أي اشتراك أو API مدفوع بكل السلسلة.
+Zero. GitHub Actions free tier easily covers two short runs a day, Gmail SMTP is free, and there's no paid API or subscription anywhere in this pipeline.
