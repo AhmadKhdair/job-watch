@@ -4,7 +4,9 @@
   "diff_watch": [
     { "name": "ASAL Technologies - Careers", "url": "https://careers.asaltech.com/" },
     { "name": "Sarwa - Careers", "url": "https://careers.sarwa.co/" },
-    { "name": "ProGineer Technologies - Careers", "url": "https://careers.smartrecruiters.com/Progineer1/all-jobs" }
+    { "name": "ProGineer Technologies - Careers", "url": "https://careers.smartrecruiters.com/Progineer1/all-jobs" },
+    { "name": "Exalt Technologies - Careers", "url": "https://www.exalt-tech.com/careers" },
+    { "name": "Udacity - Scholarships (free/sponsored nanodegrees)", "url": "https://www.udacity.com/scholarships" }
   ],
 
   "job_boards": [
@@ -13,7 +15,10 @@
     { "name": "jobs.ps - DevOps", "url": "https://www.jobs.ps/en/search?keyword=devops" },
     { "name": "jobs.ps - Cloud", "url": "https://www.jobs.ps/en/search?keyword=cloud" },
     { "name": "jobs.ps - Internship IT", "url": "https://www.jobs.ps/en/search?keyword=intern" },
-    { "name": "Bayt.com - DevOps Internship (UAE)", "url": "https://www.bayt.com/en/uae/jobs/devops-internship-jobs/" },
-    { "name": "Bayt.com - AI Internship (Middle East)", "url": "https://www.bayt.com/en/international/jobs/ai-internship-jobs/" }
+    { "name": "Bayt.com - DevOps Remote (International)", "url": "https://www.bayt.com/en/international/jobs/devops-remote-jobs/" },
+    { "name": "Bayt.com - AI Internship (Middle East)", "url": "https://www.bayt.com/en/international/jobs/ai-internship-jobs/" },
+    { "name": "RemoteOK - DevOps (Remote, Worldwide)", "url": "https://remoteok.com/remote-devops-jobs" },
+    { "name": "RemoteOK - Machine Learning (Remote, Worldwide)", "url": "https://remoteok.com/remote-machine-learning-jobs" },
+    { "name": "We Work Remotely - DevOps & SysAdmin", "url": "https://weworkremotely.com/categories/remote-devops-sysadmin-jobs" }
   ]
 }
