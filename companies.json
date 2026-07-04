@@ -1,0 +1,19 @@
+{
+  "_readme": "عدّل هاي القائمة بحرية. diff_watch = صفحات شركات بتتفحص لو تغيرت (بترجعلك تنبيه تراجعها يدوياً). job_boards = صفحات بحث بمواقع وظائف بتستخرج كل إعلان لحاله وتقارنه بالسابق.",
+
+  "diff_watch": [
+    { "name": "ASAL Technologies - Careers", "url": "https://careers.asaltech.com/" },
+    { "name": "Sarwa - Careers", "url": "https://careers.sarwa.co/" },
+    { "name": "ProGineer Technologies - Careers", "url": "https://careers.smartrecruiters.com/Progineer1/all-jobs" }
+  ],
+
+  "job_boards": [
+    { "name": "jobs.ps - AI", "url": "https://www.jobs.ps/en/search?keyword=AI" },
+    { "name": "jobs.ps - Machine Learning", "url": "https://www.jobs.ps/en/search?keyword=machine%20learning" },
+    { "name": "jobs.ps - DevOps", "url": "https://www.jobs.ps/en/search?keyword=devops" },
+    { "name": "jobs.ps - Cloud", "url": "https://www.jobs.ps/en/search?keyword=cloud" },
+    { "name": "jobs.ps - Internship IT", "url": "https://www.jobs.ps/en/search?keyword=intern" },
+    { "name": "Bayt.com - DevOps Internship (UAE)", "url": "https://www.bayt.com/en/uae/jobs/devops-internship-jobs/" },
+    { "name": "Bayt.com - AI Internship (Middle East)", "url": "https://www.bayt.com/en/international/jobs/ai-internship-jobs/" }
+  ]
+}
