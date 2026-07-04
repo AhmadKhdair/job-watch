@@ -46,12 +46,15 @@ NAV_NOISE = {
     "log in", "create your profile", "resources", "premium", "about us",
     "privacy policy", "cookie policy", "terms of use", "sitemap", "rss",
     "get jobs by email", "share page", "connect", "people",
+    "view company profile", "post a remote job", "top 100 remote companies",
+    "top trending remote jobs", "all other jobs", "sign up",
 }
 
 # A job-posting link almost always ends in some kind of id/slug and lives
 # under one of these path fragments across the sites we support.
 JOB_LINK_PATTERNS = [
     r"/jobs/[\w-]+", r"/job/[\w-]+", r"/o/[\w-]+", r"/en/jobs/[\w-]+",
+    r"/remote-jobs/[\w-]+",  # RemoteOK + We Work Remotely posting links
 ]
 
 
