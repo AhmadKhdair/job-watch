@@ -1,5 +1,5 @@
 {
-  "_readme": "عدّل هاي القائمة بحرية. diff_watch = صفحات شركات بتتفحص لو تغيرت (بترجعلك تنبيه تراجعها يدوياً). job_boards = صفحات بحث بمواقع وظائف بتستخرج كل إعلان لحاله وتقارنه بالسابق.",
+  "_readme": "Edit this list freely. diff_watch = company career pages I'm watching for changes (flags a manual review). job_boards = job search pages where every posting gets extracted individually and compared to the previous run.",
 
   "diff_watch": [
     { "name": "ASAL Technologies - Careers", "url": "https://careers.asaltech.com/" },
