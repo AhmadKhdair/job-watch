@@ -137,10 +137,13 @@
     ]
   },
   "diff_watch": {
-    "https://careers.asaltech.com/": "37b0b5cff67034b4340f4748be95d0095599802352d6321982446c86e4ac4a0a",
-    "https://careers.sarwa.co/": "db04bda10e1af2193f7b3b2ce41127e28283da0d4813022ba3b898068abf483b",
-    "https://careers.smartrecruiters.com/Progineer1/all-jobs": "40644eb9be71d405ab17feb85248b622386329ae354584eed7ec3bed64e85763",
-    "https://www.exalt-tech.com/careers": "36b5d5078a67caeff54fc0bc45ed24a418cd111fff7acdf9556e5e30ca0d9cd2",
-    "https://www.udacity.com/scholarships": "027033bc799a619b42dcb876542ce2cac8878f20103e170962385286b80e3c81"
+    "https://careers.asaltech.com/": [],
+    "https://careers.sarwa.co/": [
+      "DevOps Engineering Intern",
+      "Frontend Engineering Intern"
+    ],
+    "https://careers.smartrecruiters.com/Progineer1/all-jobs": [],
+    "https://www.exalt-tech.com/careers": [],
+    "https://www.udacity.com/scholarships": []
   }
 }
