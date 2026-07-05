@@ -1,5 +1,5 @@
 {
-  "_readme": "Edit this list freely. diff_watch = company career pages I'm watching for changes (flags a manual review). job_boards = job search pages where every posting gets extracted individually and compared to the previous run.",
+  "_readme": "Edit this list freely. diff_watch = company career pages I'm watching for new training / internship / train-to-hire mentions only (unrelated page edits are ignored). job_boards = job search pages where every posting gets extracted individually and compared to the previous run.",
 
   "diff_watch": [
     { "name": "ASAL Technologies - Careers", "url": "https://careers.asaltech.com/" },
