@@ -8,9 +8,12 @@ What it does:
   2. For "job_boards" entries: extracts individual job posting links + titles,
      and compares them against what was seen last run (data/state.json).
      Anything new gets reported.
-  3. For "diff_watch" entries: hashes the visible page text and compares to
-     last run. If it changed, it reports "this page changed, go check it" —
-     no scraping assumptions needed, works on any site.
+  3. For "diff_watch" entries: scans the visible page text for lines that
+     mention training / internship / train-to-hire opportunities (regardless
+     of exact wording), and compares that set against last run. Only newly
+     appeared training-related lines get reported — not every change on the
+     page. This works on any site without needing to know its layout, and
+     without flooding the inbox over unrelated page edits.
   4. If anything new/changed was found, sends a single summary email via
      Gmail SMTP (credentials come from environment variables / GitHub Secrets
      — this script never stores or hardcodes them).
@@ -56,6 +59,17 @@ JOB_LINK_PATTERNS = [
     r"/jobs/[\w-]+", r"/job/[\w-]+", r"/o/[\w-]+", r"/en/jobs/[\w-]+",
     r"/remote-jobs/[\w-]+",  # RemoteOK + We Work Remotely posting links
 ]
+
+# Used to filter diff_watch alerts down to training / internship /
+# train-to-hire mentions only, regardless of the exact wording a company
+# uses for it. Matches English and Arabic variants.
+TRAINING_KEYWORDS_RE = re.compile(
+    r"\btrain(?:ees?|ing|eeship)?\b"
+    r"|\bintern(?:s|ship)?\b"
+    r"|train[\s-]?to[\s-]?hire"
+    r"|تدريب|متدرب",
+    re.IGNORECASE,
+)
 
 
 def log(msg):
@@ -118,6 +132,20 @@ def extract_job_links(base_url, html):
     return found  # {url: title}
 
 
+def extract_training_snippets(text):
+    """Return the set of visible lines on a page that mention training,
+    internship, or train-to-hire opportunities — used to filter diff_watch
+    alerts down to just those, instead of any page edit."""
+    snippets = set()
+    for raw_line in text.splitlines():
+        line = " ".join(raw_line.split())
+        if not line or len(line) > 300:
+            continue
+        if TRAINING_KEYWORDS_RE.search(line):
+            snippets.add(line)
+    return snippets
+
+
 def _urljoin(base, href):
     from urllib.parse import urljoin
     return urljoin(base, href)
@@ -135,7 +163,7 @@ def run():
                  "diff_watch": dict(state.get("diff_watch", {}))}
 
     report_new_jobs = []   # list of (source_name, title, url)
-    report_changed_pages = []  # list of (source_name, url)
+    report_changed_pages = []  # list of (source_name, snippet, url)
     errors = []
 
     with sync_playwright() as p:
@@ -164,20 +192,34 @@ def run():
                 errors.append(f"{name} ({url}): {e}")
                 log(f"[job_board] ERROR on {name}: {e}")
 
-        # --- Company pages: generic content-change detection ---
+        # --- Company pages: only alert on new training/internship/
+        # --- train-to-hire mentions, not on every page edit.
         for src in config.get("diff_watch", []):
             name, url = src["name"], src["url"]
             try:
                 _html, text = render_page(browser, url)
-                digest = hash_text(text)
-                previous = state.get("diff_watch", {}).get(url)
+                current_snippets = extract_training_snippets(text)
 
-                if previous is not None and previous != digest:
-                    report_changed_pages.append((name, url))
+                previous_raw = state.get("diff_watch", {}).get(url)
+                # Old state format stored a single hash string. If we see
+                # that, treat it as no baseline yet rather than crashing.
+                previous_snippets = (
+                    set(previous_raw) if isinstance(previous_raw, list) else None
+                )
+                is_first_run = previous_snippets is None
 
-                new_state["diff_watch"][url] = digest
-                log(f"[diff_watch] {name}: "
-                    f"{'first run, establishing baseline' if previous is None else ('CHANGED' if previous != digest else 'no change')}")
+                if not is_first_run:
+                    new_snippets = current_snippets - previous_snippets
+                    for snippet in new_snippets:
+                        report_changed_pages.append((name, snippet, url))
+
+                new_state["diff_watch"][url] = sorted(current_snippets)
+                new_count = (
+                    len(current_snippets - previous_snippets) if not is_first_run else 0
+                )
+                log(f"[diff_watch] {name}: {len(current_snippets)} training-related "
+                    f"line(s) seen, {new_count} new "
+                    f"({'first run, establishing baseline' if is_first_run else 'checked'})")
             except Exception as e:
                 errors.append(f"{name} ({url}): {e}")
                 log(f"[diff_watch] ERROR on {name}: {e}")
@@ -211,16 +253,16 @@ def send_email_report(new_jobs, changed_pages, errors):
         for source, title, url in new_jobs:
             lines.append(f"  • [{source}] {title}\n    {url}\n")
     if changed_pages:
-        lines.append("\nCompany career pages that changed (worth a manual look):\n")
-        for source, url in changed_pages:
-            lines.append(f"  • {source}\n    {url}\n")
+        lines.append("\nNew training / internship / train-to-hire mentions found on company pages:\n")
+        for source, snippet, url in changed_pages:
+            lines.append(f"  • [{source}] {snippet}\n    {url}\n")
     if errors:
         lines.append("\nSources that failed to check this run (site may have changed structure):\n")
         for e in errors:
             lines.append(f"  • {e}\n")
 
     body = "\n".join(lines)
-    subject = f"job-watch: {len(new_jobs)} new posting(s), {len(changed_pages)} page(s) changed"
+    subject = f"job-watch: {len(new_jobs)} new posting(s), {len(changed_pages)} training mention(s)"
 
     msg = MIMEText(body, "plain", "utf-8")
     msg["Subject"] = subject
@@ -241,9 +283,9 @@ def print_report(new_jobs, changed_pages, errors):
         for source, title, url in new_jobs:
             print(f"  [{source}] {title} -> {url}")
     if changed_pages:
-        print("CHANGED PAGES:")
-        for source, url in changed_pages:
-            print(f"  {source} -> {url}")
+        print("NEW TRAINING / INTERNSHIP / TRAIN-TO-HIRE MENTIONS:")
+        for source, snippet, url in changed_pages:
+            print(f"  [{source}] {snippet} -> {url}")
     if errors:
         print("ERRORS:")
         for e in errors:
