@@ -6,7 +6,7 @@ A completely free automation that scans for new job and internship opportunities
 
 - Opens every link in `companies.json` with a headless browser (Playwright), so even job pages that load their content with JavaScript work fine.
 - For job board search pages (`job_boards`): pulls out every individual posting and compares it against what it saw last run. Anything new goes into the report.
-- For company career pages (`diff_watch`): takes a hash of the page's visible content, and if it changed since last time, flags it as "worth checking manually" — this works on any site since it doesn't need to know the page's internal layout.
+- For company career pages (`diff_watch`): scans the visible page text for lines that mention training, internship, or train-to-hire opportunities (any wording), and only alerts on newly appeared lines like that — not on every unrelated edit to the page. This works on any site since it doesn't need to know the page's internal layout.
 - If anything new turns up, it sends me a single summary email with the details and links.
 - It saves the last-seen state in `data/state.json`, which the workflow updates automatically on every run — I never touch this file by hand.
 
@@ -44,7 +44,7 @@ Actions tab → "job-watch" in the sidebar → "Run workflow" to trigger it imme
 
 Edit `companies.json` directly, no code changes needed:
 
-- `diff_watch`: add a link to any company's careers page, even without a structured search — any change gets flagged.
+- `diff_watch`: add a link to any company's careers page. I get an alert only when a new training / internship / train-to-hire mention shows up on that page — unrelated page edits are ignored.
 - `job_boards`: add a search URL from any job board (jobs.ps, Bayt.com, RemoteOK, We Work Remotely, etc.) — whatever search link shows up in the browser can be pasted straight in here.
 
 ## Changing the schedule
