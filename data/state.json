@@ -126,7 +126,6 @@
       "https://weworkremotely.com/remote-jobs/datadog-partner-solutions-architect-pan-emea-gsi",
       "https://weworkremotely.com/remote-jobs/datadog-security-sales-engineer",
       "https://weworkremotely.com/remote-jobs/datadog-senior-sales-engineer-key-accounts",
-      "https://weworkremotely.com/remote-jobs/datadog-senior-sales-engineer-key-accounts-central",
       "https://weworkremotely.com/remote-jobs/datadog-senior-sales-engineer-majors-east",
       "https://weworkremotely.com/remote-jobs/datadog-senior-sales-engineer-majors-france",
       "https://weworkremotely.com/remote-jobs/datadog-senior-sales-engineer-majors-uk-nordics-netherlands",
@@ -157,10 +156,7 @@
   },
   "diff_watch": {
     "https://careers.asaltech.com/": [],
-    "https://careers.sarwa.co/": [
-      "DevOps Engineering Intern",
-      "Frontend Engineering Intern"
-    ],
+    "https://careers.sarwa.co/": [],
     "https://careers.smartrecruiters.com/Progineer1/all-jobs": [],
     "https://www.exalt-tech.com/careers": [],
     "https://www.udacity.com/scholarships": []
