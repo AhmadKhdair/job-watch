@@ -22,7 +22,6 @@
       "https://remoteok.com/remote-jobs/remote-asistente-de-agrimensura-caribbean-sign-supply-1135804",
       "https://remoteok.com/remote-jobs/remote-assistant-store-manager-carters-inc-1133780",
       "https://remoteok.com/remote-jobs/remote-billing-and-collections-accountant-prime-janitorial-service-corporation-1135825",
-      "https://remoteok.com/remote-jobs/remote-borracheiro-cf-distribuidora-1135828",
       "https://remoteok.com/remote-jobs/remote-camareira-grand-carima-resort-amp-convention-1135819",
       "https://remoteok.com/remote-jobs/remote-conserje-leon-cargill-1134103",
       "https://remoteok.com/remote-jobs/remote-construction-engineer-ang-construction-1135811",
@@ -50,6 +49,8 @@
       "https://remoteok.com/remote-jobs/remote-project-coordinator-franklin-fitch-1134634",
       "https://remoteok.com/remote-jobs/remote-projeteur-vrd-f-h-b-hive-engineering-1133787",
       "https://remoteok.com/remote-jobs/remote-responsable-etudes-de-prix-atyx-1133785",
+      "https://remoteok.com/remote-jobs/remote-senior-devops-engineer-lemon-io-1137557",
+      "https://remoteok.com/remote-jobs/remote-senior-react-full-stack-developer-lemon-io-1137475",
       "https://remoteok.com/remote-jobs/remote-seo-manager-chrono24-1135809",
       "https://remoteok.com/remote-jobs/remote-staff-software-development-engineer-sdm-delinea-1136796",
       "https://remoteok.com/remote-jobs/remote-staff-software-engineer-evolve-1136447",
@@ -94,29 +95,7 @@
       "https://remoteok.com/remote-jobs/remote-staff-devops-engineer-life360-1130783",
       "https://remoteok.com/remote-jobs/remote-staff-software-engineer-ml-ranking-platform-reddit-1128191"
     ],
-    "https://weworkremotely.com/categories/remote-devops-sysadmin-jobs": [
-      "https://weworkremotely.com/remote-jobs/abnormal-customer-solutions-engineer-emea",
-      "https://weworkremotely.com/remote-jobs/abnormal-director-renewals",
-      "https://weworkremotely.com/remote-jobs/beyondtrust-cloud-network-engineer",
-      "https://weworkremotely.com/remote-jobs/beyondtrust-cyber-defense-engineer",
-      "https://weworkremotely.com/remote-jobs/beyondtrust-elearning-developer",
-      "https://weworkremotely.com/remote-jobs/carrot-director-information-security",
-      "https://weworkremotely.com/remote-jobs/collibra-cps-solution-architect",
-      "https://weworkremotely.com/remote-jobs/collibra-manager-professional-services",
-      "https://weworkremotely.com/remote-jobs/current-senior-engineer-net",
-      "https://weworkremotely.com/remote-jobs/datadog-enterprise-security-sales-specialist",
-      "https://weworkremotely.com/remote-jobs/expel-senior-detection-response-engineer",
-      "https://weworkremotely.com/remote-jobs/flexport-senior-security-engineer-detection-response",
-      "https://weworkremotely.com/remote-jobs/keeper-security-analyst-relations-manager",
-      "https://weworkremotely.com/remote-jobs/keeper-security-associate-talent-acquisition-partner-tech",
-      "https://weworkremotely.com/remote-jobs/launchdarkly-engineering-manager-cloud-engineering",
-      "https://weworkremotely.com/remote-jobs/pagerduty-principal-solutions-consultant",
-      "https://weworkremotely.com/remote-jobs/planetscale-enterprise-support-engineer",
-      "https://weworkremotely.com/remote-jobs/thehivecareers-co-devops-engineer-remote",
-      "https://weworkremotely.com/remote-jobs/vercel-security-engineer-cloud",
-      "https://weworkremotely.com/remote-jobs/vercel-senior-manager-solutions-architect",
-      "https://weworkremotely.com/remote-jobs/zoominfo-technologies-llc-principal-infrastructure-architect-data-platform"
-    ]
+    "https://weworkremotely.com/categories/remote-devops-sysadmin-jobs": []
   },
   "diff_watch": {
     "https://careers.asaltech.com/": [],
